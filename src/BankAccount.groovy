@@ -16,14 +16,12 @@ class BankAccount {
     }
 
     def void accrueInterest() {
-        def service = new interestRateService()
+        def service = new InterestRateService()
         def rate = service.getInterestRate()
-
 
         def accruedInterest = balance * rate
 
         deposit(accruedInterest)
-
     }
 }
 

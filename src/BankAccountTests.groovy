@@ -1,3 +1,4 @@
+import groovy.mock.interceptor.*
 /**
  * Created by peterki on 19/07/2017.
  */
@@ -30,9 +31,16 @@ class BankAccountTests extends GroovyTestCase {
     }
 
     def void testCanAccrueInterest() {
-        account.accrueInterest()
+        def service = StubFor(InterestRateService)
+        service.demand.getInterestRate {
+            return 0.10
+        }
+        service.use {
+            account.accrueInterest()
 
-        assert 11 == account.balance
+            assert 11 == account.balance
+        }
+
     }
 
 }
